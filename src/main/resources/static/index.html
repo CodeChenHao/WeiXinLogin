@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>微信扫码登录</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.4.33/vue.global.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.7.2/axios.min.js"></script>
+    <style type="text/css">
+        #app {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <img :src="qrCode" alt="">
+    </div>
+    <script>
+        const appConfig = {
+            data() {
+                return {
+                    qrCode: ""
+                }
+            },
+            methods: {
+                getQrCode(){
+                    let url = "http://127.0.0.1/webchat/qrcode";
+                    axios.get(url).then(res => {
+                        this.qrCode = res.data;
+                    })
+                }
+            },
+            created(){
+                this.getQrCode();
+            }
+        }
+
+        const app = Vue.createApp(appConfig);
+        app.mount("#app")
+    </script>
+
+</body>
+</html>
